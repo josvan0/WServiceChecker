@@ -12,7 +12,7 @@ class Message:
             symbol = '!'
         elif type == Message.ERROR:
             symbol = '*'
-        print(f'[{symbol}] {content}')
+        print(f'[{symbol}] {content}', end='\n\n')
 
 
 class WServiceCheckerException(Exception):

@@ -48,9 +48,10 @@ def diff_service_lists(args):
     s_list1 = converter.from_file(args[0], path1.suffix)
     s_list2 = converter.from_file(args[1], path2.suffix)
 
+    use_list1_first = len(s_list1) > len(s_list2)
     # check the biggest list for logs services not found
     result = _compare_service_lists(s_list1, s_list2)\
-        if len(s_list1) > len(s_list2)\
+        if use_list1_first\
         else _compare_service_lists(s_list2, s_list1)
 
     with open(r'./src/template.html', 'r') as f:
@@ -58,13 +59,18 @@ def diff_service_lists(args):
         now = datetime.now()
 
         res = res.replace('[date]', now.strftime('%a %d %B, %Y %I:%M %p'))
-        res = res.replace('[file1]', path1.stem)
-        res = res.replace('[file2]', path2.stem)
         res = res.replace('[data]', json.dumps(result))  # dict to json str
+
+        if (use_list1_first):
+            res = res.replace('[file1]', path1.name)
+            res = res.replace('[file2]', path2.name)
+        else:
+            res = res.replace('[file1]', path2.name)
+            res = res.replace('[file2]', path1.name)
 
         with open(r'./output.html', 'w') as output:
             output.write(res)
 
-    Message.create('''Diff completed,
-                   you can check results openning the file "output.html"''',
+    Message.create('''Diff completed!
+                   You can check results openning the file "output.html"''',
                    Message.INFORMATION)

@@ -32,6 +32,7 @@ exec_command = {
     'help': get_help
 }
 
+print('WServiceChecker v1.0.0')
 while run:
     user_input = input(PROMPT)
     args = user_input.split(' ')

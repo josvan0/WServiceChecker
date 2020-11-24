@@ -16,31 +16,37 @@
         <div class="title-section">
             <h2>Services configuration difference</h2>
         </div>
-        <div class="header-row">
-            <b>Service name</b>
-            <b>[file1]</b>
-            <b>[file2]</b>
-        </div>
+        <table>
+            <tr class="header-row">
+                <th>Service name</th>
+                <th>[file1]</th>
+                <th>[file2]</th>
+            </tr>
+        </table>
     </div>
     <div id="not" class="section">
         <div class="title-section">
             <h2>Services not found</h2>
         </div>
-        <div class="header-row">
-            <p>Service name</p>
-            <p>[file1]</p>
-            <p>[file2]</p>
-        </div>
+        <table>
+            <tr class="header-row">
+                <th>Service name</th>
+                <th>[file1]</th>
+                <th>[file2]</th>
+            </tr>
+        </table>
     </div>
     <div id="eq" class="section">
         <div class="title-section">
             <h2>Services without changes</h2>
         </div>
-        <div class="header-row">
-            <p>Service name</p>
-            <p>Configuration</p>
-            <p>Description</p>
-        </div>
+        <table>
+            <tr class="header-row">
+                <th>Service name</th>
+                <th>Configuration</th>
+                <th>Description</th>
+            </tr>
+        </table>
     </div>
 
     <style>
@@ -69,18 +75,29 @@
             margin-bottom: 100px;
         }
 
-        .header-row,
-        .data-row {
-            align-items: center;
-            display: flex;
-            gap: 20px;
-            justify-content: space-evenly;
-            margin: 0;
-            padding: 20px;
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
 
         .data-row {
             border-top: 2px solid black;
+            text-align: center;
+        }
+
+        .data-row td {
+            padding: 20px;
+        }
+
+        .cell-40 {
+            text-align: justify;
+            width: 40%;
+            word-wrap: break-word;
+        }
+
+        .cell-30 {
+            width: 30%;
+            word-wrap: break-word;
         }
 
         #diff .title-section {
@@ -93,6 +110,7 @@
         }
 
         #diff .data-row {
+            background-color: #fbbac5;
             border-top-color: #f21b3f;
         }
 
@@ -106,6 +124,7 @@
         }
 
         #not .data-row {
+            background-color: #ffe0b8;
             border-top-color: #ff9914;
         }
 
@@ -119,70 +138,103 @@
         }
 
         #eq .data-row {
+            background-color: #b6f7ac;
             border-top-color: #29bf12;
         }
     </style>
 
     <script>
-        const diffDiv = document.getElementById('diff');
-        const notDiv = document.getElementById('not');
-        const eqDiv = document.getElementById('eq');
+        function notResultRow() {
+            const row = document.createElement('tr');
+            row.classList.add('data-row');
+            const cell = document.createElement('td');
+            cell.setAttribute('colspan', '3');
+            cell.textContent = 'No results';
+            row.appendChild(cell);
+            return row;
+        }
+
+        const diffTable = document.querySelector('#diff table');
+        const notTable = document.querySelector('#not table');
+        const eqTable = document.querySelector('#eq table');
 
         const data = [data];
 
-        data.diff.forEach(row => {
-            const serviceDiv = document.createElement('div');
-            serviceDiv.classList.add('data-row');
+        if (data.diff.length > 0) {
+            data.diff.forEach(row => {
+                const serviceRow = document.createElement('tr');
+                serviceRow.classList.add('data-row');
 
-            const name = document.createElement('p');
-            name.textContent = row.name;
-            serviceDiv.appendChild(name);
+                const name = document.createElement('td');
+                name.textContent = row.name;
+                name.classList.add('cell-40');
+                serviceRow.appendChild(name);
 
-            const file1 = document.createElement('p');
-            file1.textContent = row.file1;
-            serviceDiv.appendChild(file1);
+                const file1 = document.createElement('td');
+                file1.textContent = row.file1;
+                file1.classList.add('cell-30');
+                serviceRow.appendChild(file1);
 
-            const file2 = document.createElement('p');
-            file2.textContent = row.file2;
-            serviceDiv.appendChild(file2);
-            diffDiv.appendChild(serviceDiv);
-        });
+                const file2 = document.createElement('td');
+                file2.textContent = row.file2;
+                file2.classList.add('cell-30');
+                serviceRow.appendChild(file2);
+                diffTable.appendChild(serviceRow);
+            });
+        }
+        else {
+            diffTable.appendChild(notResultRow());
+        }
 
-        data.eq.forEach(row => {
-            const serviceDiv = document.createElement('div');
-            serviceDiv.classList.add('data-row');
+        if (data.eq.length > 0) {
+            data.eq.forEach(row => {
+                const serviceRow = document.createElement('tr');
+                serviceRow.classList.add('data-row');
 
-            const name = document.createElement('p');
-            name.textContent = row.name;
-            serviceDiv.appendChild(name);
+                const name = document.createElement('td');
+                name.textContent = row.name;
+                name.classList.add('cell-30');
+                serviceRow.appendChild(name);
 
-            const config = document.createElement('p');
-            config.textContent = row.config;
-            serviceDiv.appendChild(config);
+                const config = document.createElement('td');
+                config.textContent = row.config;
+                config.classList.add('cell-30');
+                serviceRow.appendChild(config);
 
-            const description = document.createElement('p');
-            description.textContent = row.description;
-            serviceDiv.appendChild(description);
-            eqDiv.appendChild(serviceDiv);
-        });
+                const description = document.createElement('td');
+                description.textContent = row.description;
+                description.classList.add('cell-40');
+                serviceRow.appendChild(description);
+                eqTable.appendChild(serviceRow);
+            });
+        } else {
+            eqTable.appendChild(notResultRow());
+        }
 
-        data.not.forEach(row => {
-            const serviceDiv = document.createElement('div');
-            serviceDiv.classList.add('data-row');
+        if (data.not.length > 0) {
+            data.not.forEach(row => {
+                const serviceRow = document.createElement('tr');
+                serviceRow.classList.add('data-row');
 
-            const name = document.createElement('p');
-            name.textContent = row.name;
-            serviceDiv.appendChild(name);
+                const name = document.createElement('td');
+                name.textContent = row.name;
+                name.classList.add('cell-40');
+                serviceRow.appendChild(name);
 
-            const file1 = document.createElement('p');
-            file1.textContent = row.file1;
-            serviceDiv.appendChild(file1);
+                const file1 = document.createElement('td');
+                file1.textContent = row.file1;
+                file1.classList.add('cell-30');
+                serviceRow.appendChild(file1);
 
-            const file2 = document.createElement('p');
-            file2.textContent = row.file2;
-            serviceDiv.appendChild(file2);
-            notDiv.appendChild(serviceDiv);
-        });
+                const file2 = document.createElement('td');
+                file2.textContent = row.file2;
+                file2.classList.add('cell-30');
+                serviceRow.appendChild(file2);
+                notTable.appendChild(serviceRow);
+            });
+        } else {
+            notTable.appendChild(notResultRow());
+        }
     </script>
 </body>
 

@@ -27,6 +27,7 @@ def from_file(filename, suffix):
         rows = []
         if suffix == CSV_SUFFIX:
             rows = f.readlines()
+            rows.pop(0)  # remove headers row
         elif suffix == XML_SUFFIX:
             xmlDoc = ElementTree.parse(f)
             root = xmlDoc.getroot()
@@ -49,7 +50,6 @@ def verify_path(filename, suffixes):
 def export_xml(args):
     path = verify_path(args[0], [CSV_SUFFIX])
     service_list = from_file(args[0], CSV_SUFFIX)
-    service_list.pop(0)  # remove headers row
 
     root = xmlTree.Element('WServiceList')
     for service in service_list:
