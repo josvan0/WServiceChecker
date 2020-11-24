@@ -1,14 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Results</title>
 </head>
-<body>
-    
-    <script>
 
+<body>
+    <div class="title">
+        <h1>Results</h1>
+        <cite>Date: [date]</cite>
+    </div>
+    <div id="diff" class="section">
+        <div class="title-section">
+            <h2>Services configuration difference</h2>
+        </div>
+        <div class="header-row">
+            <b>Service name</b>
+            <b>[file1]</b>
+            <b>[file2]</b>
+        </div>
+    </div>
+    <div id="not" class="section">
+        <div class="title-section">
+            <h2>Services not found</h2>
+        </div>
+        <div class="header-row">
+            <p>Service name</p>
+            <p>[file1]</p>
+            <p>[file2]</p>
+        </div>
+    </div>
+    <div id="eq" class="section">
+        <div class="title-section">
+            <h2>Services without changes</h2>
+        </div>
+        <div class="header-row">
+            <p>Service name</p>
+            <p>Configuration</p>
+            <p>Description</p>
+        </div>
+    </div>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            margin: 20px 30px;
+        }
+
+        .title h1 {
+            color: #08bdbd;
+            font-size: 2em;
+        }
+
+        .title cite {
+            color: #08bdbd;
+            font-size: 1em;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .header-row,
+        .data-row {
+            align-items: center;
+            display: flex;
+            gap: 20px;
+            justify-content: space-evenly;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .data-row {
+            border-top: 2px solid black;
+        }
+
+        #diff .title-section {
+            color: #f21b3f;
+        }
+
+        #diff .header-row {
+            background-color: #f21b3f;
+            color: white;
+        }
+
+        #diff .data-row {
+            border-top-color: #f21b3f;
+        }
+
+        #not .title-section {
+            color: #ff9914;
+        }
+
+        #not .header-row {
+            background-color: #ff9914;
+            color: white;
+        }
+
+        #not .data-row {
+            border-top-color: #ff9914;
+        }
+
+        #eq .title-section {
+            color: #29bf12;
+        }
+
+        #eq .header-row {
+            background-color: #29bf12;
+            color: white;
+        }
+
+        #eq .data-row {
+            border-top-color: #29bf12;
+        }
+    </style>
+
+    <script>
+        const diffDiv = document.getElementById('diff');
+        const notDiv = document.getElementById('not');
+        const eqDiv = document.getElementById('eq');
+
+        const data = [data];
+
+        data.diff.forEach(row => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.classList.add('data-row');
+
+            const name = document.createElement('p');
+            name.textContent = row.name;
+            serviceDiv.appendChild(name);
+
+            const file1 = document.createElement('p');
+            file1.textContent = row.file1;
+            serviceDiv.appendChild(file1);
+
+            const file2 = document.createElement('p');
+            file2.textContent = row.file2;
+            serviceDiv.appendChild(file2);
+            diffDiv.appendChild(serviceDiv);
+        });
+
+        data.eq.forEach(row => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.classList.add('data-row');
+
+            const name = document.createElement('p');
+            name.textContent = row.name;
+            serviceDiv.appendChild(name);
+
+            const config = document.createElement('p');
+            config.textContent = row.config;
+            serviceDiv.appendChild(config);
+
+            const description = document.createElement('p');
+            description.textContent = row.description;
+            serviceDiv.appendChild(description);
+            eqDiv.appendChild(serviceDiv);
+        });
+
+        data.not.forEach(row => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.classList.add('data-row');
+
+            const name = document.createElement('p');
+            name.textContent = row.name;
+            serviceDiv.appendChild(name);
+
+            const file1 = document.createElement('p');
+            file1.textContent = row.file1;
+            serviceDiv.appendChild(file1);
+
+            const file2 = document.createElement('p');
+            file2.textContent = row.file2;
+            serviceDiv.appendChild(file2);
+            notDiv.appendChild(serviceDiv);
+        });
     </script>
 </body>
+
 </html>

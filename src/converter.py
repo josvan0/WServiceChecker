@@ -1,4 +1,4 @@
-import xml.etree.cElementTree as xmlTree
+import xml.etree.ElementTree as xmlTree
 from xml.etree import ElementTree
 from event import Message, WServiceCheckerException
 from pathlib import Path
@@ -29,7 +29,7 @@ def from_file(filename, suffix):
             rows = f.readlines()
         elif suffix == XML_SUFFIX:
             xmlDoc = ElementTree.parse(f)
-            root = xmlDoc.find('WServiceList')
+            root = xmlDoc.getroot()
             rows = root.findall('WService')
 
         return [WService(name, description, startup)

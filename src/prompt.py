@@ -1,4 +1,5 @@
 from converter import export_xml
+from diff import diff_service_lists
 from event import Message, WServiceCheckerException
 
 
@@ -14,14 +15,18 @@ def get_help():
 
 def exit_prompt():
     global run
+    Message.create('Goodbye!!!',
+                   Message.INFORMATION)
     run = False
 
 
 # switch
 exec_command = {
+    'd': diff_service_lists,
     'e': exit_prompt,
     'f': export_xml,
     'h': get_help,
+    'diff': diff_service_lists,
     'exit': exit_prompt,
     'format': export_xml,
     'help': get_help

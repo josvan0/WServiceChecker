@@ -11,3 +11,7 @@ __pycache__/
 # output files
 *.xml
 *.json
+*.html
+
+# include template result
+!template.html
