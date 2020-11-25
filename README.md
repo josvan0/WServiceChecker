@@ -1,11 +1,16 @@
 # WServiceChecker
+Command tool for check differences between Windows services configuration. Only you need is export your services configuration with the Windows services tool as a csv file and use this tool.
 
----
-## Delete this on create project
+## Requirements
+- Python 3.4^
 
-This project isn't focused in a framework or programming language, it contains **MIT license** by default and **gitignore** file to create fastly a Git repository.
-Creates following structure:
-- `src/`: Folder where store all scripts of project.
-- `.gitignore`: For Git projects.
-- `LICENSE`: MIT license.
-- `README.md`: This file to present project.
+### Running project
+1. Access to repository folder in a **cmd**.
+2. Type:
+    ```
+    python src/prompt.py
+    ```
+3. And when you see the prompt `WService $`, you are ready for use the tool.
+
+#### Version
+1.0.0
